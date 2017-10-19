@@ -9,7 +9,7 @@ module.exports = async (saveLocal, newsSiteId, articleId) => {
   const token = await getToken(saveLocal)
   const isProcessed = await speechkitState(token, newsSiteId, articleId)
   const message = isProcessed
-    ? shoutSuccess('Your article is ready!')
+    ? shoutSuccess('Your article is processed!')
     : shoutSuccess('Your article is processing...')
 
   return message
