@@ -1,15 +1,35 @@
 'use strict'
 
 const Speechkit = require('speechkit-js')
-const chalk = require('chalk')
+const { bold, gray } = require('chalk')
+const shoutError = require('shout-error')
 
 const rightPad = require('./../lib/right-pad')
 const short = require('./../lib/short-title')
 const getToken = require('./../lib/get-token')
 
-module.exports = async saveLocal => {
+module.exports = async (saveLocal, newsSiteId, articleId) => {
   const token = await getToken(saveLocal)
   const speechkit = new Speechkit(token)
+
+  if (newsSiteId && articleId) {
+    let article
+
+    try {
+      article = await speechkit.getArticle(newsSiteId, articleId)
+      const { id, title, author, summary, share_url, state } = article // eslint-disable-line camelcase
+
+      return console.log(
+        `${bold('id:')} ${id}\n${bold('title:')} ${title}\n${bold(
+          'author:'
+        )} ${author}\n${bold('summary:')} ${summary}\n${bold(
+          'share:'
+        )} ${share_url}\n${bold('state:')} ${state}` // eslint-disable-line camelcase
+      )
+    } catch (err) {
+      shoutError(err)
+    }
+  }
 
   const newsSites = await speechkit.getNewsSites()
 
@@ -17,7 +37,7 @@ module.exports = async saveLocal => {
     speechkit.getArticles(newsSites[index].id).then(articles => {
       if (articles.length > 0) {
         console.log(
-          `${chalk.bold(newsSites[index].title)} ${chalk.gray(
+          `${bold(newsSites[index].title)} ${gray(
             '#' +
               newsSites[index].id +
               ' (' +
@@ -28,9 +48,9 @@ module.exports = async saveLocal => {
           )}`
         )
 
-        const titleLabel = rightPad(chalk.gray('title'), 40)
-        const stateLabel = rightPad(chalk.gray('state'), 21)
-        const idLabel = rightPad(chalk.gray('id'), 6)
+        const titleLabel = rightPad(gray('title'), 40)
+        const stateLabel = rightPad(gray('state'), 21)
+        const idLabel = rightPad(gray('id'), 6)
         const labels = `${titleLabel} ${stateLabel} ${idLabel}`
 
         console.log(labels)

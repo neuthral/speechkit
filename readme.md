@@ -16,14 +16,15 @@ $ yarn global add speechkit
 $ speechkit --help
 
   Usage:
-    $ speechkit login                                  SpeechKit authentication
-    $ speechkit ls                                     Show all your news sites
-    $ speechkit check <newsSiteId> <articleId>         Check if article processed
+    $ speechkit login
+    $ speechkit ls <newsSiteId> <articleId>
+    $ speechkit check <newsSiteId> <articleId>
 
   Example:
-    $ speechkit login
-    $ speechkit ls
-    $ speechkit check 299 1
+    $ speechkit login                                  SpeechKit authentication
+    $ speechkit ls                                     Show all your news sites
+    $ speechkit ls 299 1                               Show specific article
+    $ speechkit check 299 1                            Check if article processed
 
   Options:
     -h, --help                                         Show help options

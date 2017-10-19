@@ -12,14 +12,15 @@ const speechkitCheck = require('./bin/speechkit-check')
 const cli = meow(
   `
   Usage:
-    $ speechkit login                                  SpeechKit authentication
-    $ speechkit ls                                     Show all your news sites
-    $ speechkit check <newsSiteId> <articleId>         Check if article processed
+    $ speechkit login
+    $ speechkit ls <newsSiteId> <articleId>
+    $ speechkit check <newsSiteId> <articleId>
 
   Example:
-    $ speechkit login
-    $ speechkit ls
-    $ speechkit check 299 1
+    $ speechkit login                                  SpeechKit authentication
+    $ speechkit ls                                     Show all your news sites
+    $ speechkit ls 299 1                               Show specific article
+    $ speechkit check 299 1                            Check if article processed
 
   Options:
     -h, --help                                         Show help options
@@ -37,6 +38,8 @@ updateNotifier({ pkg: cli.pkg }).notify()
 
 const saveLocal = new SaveLocal('speechkit-store')
 const input = cli.input[0] ? cli.input[0].toLowerCase() : undefined
+let newsSiteId
+let articleId
 
 switch (input) {
   case 'login':
@@ -44,13 +47,15 @@ switch (input) {
     break
 
   case 'ls':
-    const id = cli.input[1] ? cli.input[1] : undefined
-    speechkitLs(saveLocal, id)
+    newsSiteId = cli.input[1]
+    articleId = cli.input[2]
+
+    speechkitLs(saveLocal, newsSiteId, articleId)
     break
 
   case 'check':
-    const newsSiteId = cli.input[1]
-    const articleId = cli.input[2]
+    newsSiteId = cli.input[1]
+    articleId = cli.input[2]
 
     speechkitCheck(saveLocal, newsSiteId, articleId)
     break
