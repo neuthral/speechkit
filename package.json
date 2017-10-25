@@ -1,6 +1,6 @@
 {
   "name": "speechkit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AI-read audio for your news posts",
   "main": "index.js",
   "repository": "https://github.com/bukinoshita/speechkit.git",
@@ -40,10 +40,11 @@
     "xo": "^0.18.2"
   },
   "xo": {
-    "extends": ["prettier"],
+    "extends": [
+      "prettier"
+    ],
     "rules": {
       "no-case-declarations": 0,
-      "no-useless-escape": 0,
       "no-useless-escape": 0,
       "camelcase": 0,
       "new-cap": 0
