@@ -8,6 +8,7 @@ const updateNotifier = require('update-notifier')
 const speechkitLogin = require('./bin/speechkit-login')
 const speechkitLs = require('./bin/speechkit-ls')
 const speechkitCheck = require('./bin/speechkit-check')
+const speechkitCreate = require('./bin/speechkit-create')
 
 const cli = meow(
   `
@@ -15,12 +16,14 @@ const cli = meow(
     $ speechkit login
     $ speechkit ls <newsSiteId> <articleId>
     $ speechkit check <newsSiteId> <articleId>
+    $ speechkit create <path-to-json>
 
   Example:
     $ speechkit login                                  SpeechKit authentication
     $ speechkit ls                                     Show all your news sites
     $ speechkit ls 299 1                               Show specific article
     $ speechkit check 299 1                            Check if article processed
+    $ speechkit create article.json                    Create an article with audio
 
   Options:
     -h, --help                                         Show help options
@@ -58,6 +61,11 @@ switch (input) {
     articleId = cli.input[2]
 
     speechkitCheck(saveLocal, newsSiteId, articleId)
+    break
+
+  case 'create':
+    const file = cli.input[1]
+    speechkitCreate(saveLocal, file)
     break
 
   default:

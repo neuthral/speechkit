@@ -19,12 +19,14 @@ $ speechkit --help
     $ speechkit login
     $ speechkit ls <newsSiteId> <articleId>
     $ speechkit check <newsSiteId> <articleId>
+    $ speechkit create <path-to-json>
 
   Example:
     $ speechkit login                                  SpeechKit authentication
     $ speechkit ls                                     Show all your news sites
     $ speechkit ls 299 1                               Show specific article
     $ speechkit check 299 1                            Check if article processed
+    $ speechkit create article.json                    Create an article with audio
 
   Options:
     -h, --help                                         Show help options
